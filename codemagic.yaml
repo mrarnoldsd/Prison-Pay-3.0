@@ -1,0 +1,25 @@
+workflows:
+  prisonpay-release:
+    name: PrisonPay Release Build
+    max_build_duration: 20
+    environment:
+      vars:
+        PACKAGE_NAME: "com.stockita.stockitapointofsales"
+      android_signing:
+        - keystore_reference
+      groups:
+        - google_credentials
+      java: 17
+    scripts:
+      - name: Build APK
+        script: |
+          ./gradlew assembleDebug
+    artifacts:
+      - build/app/outputs/apk/debug/*.apk
+    publishing:
+      email:
+        recipients:
+          - mrarnoldsd@gmail.com
+        notify:
+          success: true
+          failure: true
